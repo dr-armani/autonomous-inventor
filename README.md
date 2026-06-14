@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](./LICENSE)
 [![Platform: Claude](https://img.shields.io/badge/Platform-Claude-orange.svg)](https://claude.ai)
 [![Method: TRIZ](https://img.shields.io/badge/Method-TRIZ-blue.svg)](https://en.wikipedia.org/wiki/TRIZ)
-[![Type: Skill](https://img.shields.io/badge/Type-Skill-green.svg)](https://support.claude.com/en/articles/12512148-getting-started-with-skills)
+[![Type: Skill](https://img.shields.io/badge/Type-Skill-green.svg)](https://support.claude.com/en/articles/12580051-teach-claude-your-way-of-working-using-skills)
 
 <br>
 
@@ -200,7 +200,7 @@ After Phase 7, the skill optionally generates a complete **USPTO provisional uti
 **One-click:**
 
 1. Download [`autonomous-inventor.skill`](./autonomous-inventor.skill)
-2. Open Claude → **Settings → Capabilities → Skills**
+2. Open Claude → **Settings → Capabilities → Skills** ([how to install](https://support.claude.com/en/articles/12512180-use-skills-in-claude))
 3. Upload the file
 
 **From source:** copy `SKILL.md` into your Claude skill directory.
@@ -245,7 +245,7 @@ MIT — see [LICENSE](./LICENSE).
 
 Built by **Daniel Armani**
 
-*CEO, Texas Blockchain Center LLC · Author, Better Governance (Springer Nature, 2026)*
+*CEO, Texas Blockchain Center · Author, Better Governance (Springer Nature, 2026)*
 
 [linkedin.com/in/dr-armani](https://linkedin.com/in/dr-armani) · [github.com/dr-armani](https://github.com/dr-armani)
 
