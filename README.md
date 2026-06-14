@@ -11,7 +11,7 @@
 
 <br>
 
-*Anchor on a bad form. Iterate with TRIZ. Reframe the architecture. Loop until the hard problems are designed out — not patched.*
+*Anchor on a bad form. Iterate with TRIZ. Reframe the architecture. Loop until the hard problems are designed out — not patched. Then optimize, and optionally file a patent.*
 
 </div>
 
@@ -23,13 +23,15 @@ Most invention methods are linear: brainstorm → prototype → test → repeat.
 
 This skill does something different. It **names the contradiction** generating the hardest problems, resolves it architecturally using TRIZ, stress-tests the result, and loops back to reframe again if a structural flaw surfaces. One good reframe eliminates clusters of problems that more iteration never could.
 
+When the design converges, it generates a **Python optimization script** for numerical trade-offs and — optionally — a complete **USPTO provisional patent application** ready to file.
+
 > *Design quality is proportional to how precisely you name the contradiction.*
 
 ---
 
 ## Method
 
-**8 phases · 2 feedback loops · TRIZ throughout**
+**9 phases · 2 feedback loops · TRIZ throughout**
 
 ```
 0 Contradictions → 1 Baseline → 2 Iterate → 3 Reframe (TRIZ) → 2B Re-iterate*
@@ -37,11 +39,12 @@ This skill does something different. It **names the contradiction** generating t
                                                   │  loop if structural │
                                                   └──── 4 Stress-test ◀┘
                                                               │
-                                      5 Specialize → 6 Optimize → 7 Final design
+                               5 Specialize → 6 Optimize → 7 Final design → 8 Patent†
 ```
 
 > \* Phase 2B runs only when the reframe shifts the whole architecture.
 > The **3↔4 loop** is the engine — expect to traverse it more than once.
+> † Phase 8 is offered after Phase 7, or run upfront if requested.
 
 <br>
 
@@ -50,12 +53,13 @@ This skill does something different. It **names the contradiction** generating t
 | **0** | Contradiction inventory | Name technical and physical contradictions *before* designing. Vague contradictions produce vague reframes. |
 | **1** | Baseline | Humanoid anchor — deliberately wrong. Every later part must earn its place. Skipped with a reason when absurd. |
 | **2** | Iterate (~10 cycles) | `− remove · + add · ± adjust`, each annotated with TRIZ principles. Exposes which contradictions are actually hard. |
-| **3** | Reframe | Resolve the core contradiction architecturally: state it precisely → choose a separation strategy → apply TRIZ → name what's eliminated. |
-| **2B** | Re-iterate (conditional) | 5–10 fresh cycles on the *new* architecture if the reframe changed more than half the Phase 2 decisions. |
-| **4** | Stress-test | Brutal failure-mode analysis across 6 dimensions. **Triggers another reframe** if a structural flaw surfaces — this loop is where good designs become great. |
+| **3** | Reframe | State contradiction precisely → choose separation strategy → apply TRIZ → name what's eliminated. The multiplier step. |
+| **2B** | Re-iterate (conditional) | 5–10 fresh cycles on the *new* architecture if the reframe invalidated more than half the Phase 2 decisions. |
+| **4** | Stress-test | Brutal failure-mode analysis across 6 dimensions. **Triggers another reframe** if a structural flaw surfaces. |
 | **5** | Specialize + autonomy | Define the bounded operating domain. Mechanics solves; AI decides. "Refuse safely" and "detect-and-escalate" are features. |
-| **6** | Optimize | Tune within the fixed architecture — FMEA, efficiency, cost/weight, manufacturability, final TRIZ redundancy sweep. Hard rule: structural changes route back to Phase 3, not here. |
+| **6** | Optimize | Tune within the fixed architecture: FMEA, efficiency, cost/weight, manufacturability, final TRIZ sweep — **plus a Python `scipy.optimize` script** for numerical trade-offs. |
 | **7** | Final design | Name · components · full cycle · non-obvious moves · TRIZ citation log · reframe history · residual limits · niche |
+| **8** | Provisional patent | Complete USPTO provisional application — cover sheet, background, summary, ASCII drawings with reference numerals, detailed description, claims, abstract, filing checklist. |
 
 ---
 
@@ -65,9 +69,10 @@ The skill embeds the full **TRIZ 40 Inventive Principles** woven throughout ever
 
 | Where | How TRIZ is used |
 |-------|-----------------|
-| Phase 2 | Each `−/+/±` move is annotated with the principle(s) behind it, building an auditable design rationale |
-| Phase 3 | Contradiction → separation strategy → principle lookup table by goal |
-| Phase 4 | P22 (Blessing in disguise) and P11 (Cushion in advance) applied as a stress-test lens |
+| Phase 2 | Each `−/+/±` move annotated with principle(s) — builds auditable design rationale |
+| Phase 3 | Contradiction → separation strategy → goal-to-principle lookup table |
+| Phase 4 | P22 (Blessing in disguise) and P11 (Cushion in advance) as stress-test lens |
+| Phase 5 | P10, P15, P24, P25 guide the mechanics-vs-AI split |
 | Phase 6 | Final sweep with P2, P6, P20 to surface remaining redundancy |
 | Phase 7 | TRIZ citation log in the final design output |
 
@@ -124,6 +129,41 @@ When one element must simultaneously be X and not-X:
 
 ---
 
+## Python optimization (Phase 6)
+
+When the design has coupled numerical parameters, the skill generates a ready-to-run `scipy.optimize` script:
+
+```python
+# Objective function, physical constraints, and bounds
+result = differential_evolution(objective, bounds, seed=42, tol=1e-8)
+
+# Results table: parameter | optimal value | units | note
+# Sensitivity block: ±10% perturbation → % impact on objective
+```
+
+Covers: motor sizing, gear ratios, beam dimensions, cost/weight/speed trade-offs, thermal margins. Multi-objective (Pareto) sweep when two objectives conflict. Skipped with a one-line reason if no meaningful numerical parameters exist.
+
+---
+
+## Provisional patent (Phase 8)
+
+After Phase 7, the skill optionally generates a complete **USPTO provisional utility patent application** establishing a 12-month priority date (35 U.S.C. 111(b)):
+
+| Section | Content |
+|---------|---------|
+| Cover sheet | USPTO Form SB/16 data |
+| Background | Field, prior art, problem statement drawn from Phase 0 contradictions |
+| Summary | Broadest inventive concept, advantages linked to Phase 3 reframe payoffs |
+| Drawings | ASCII line drawings with reference numerals; draftsperson-ready descriptions |
+| Detailed description | Component-by-component, operating cycle, 2–3 alternative embodiments (enables POSITA per 35 U.S.C. 112) |
+| Claims | ≥1 independent + 3–5 dependent claims (apparatus and method formats) |
+| Abstract | ≤150 words |
+| Filing checklist | Patent Center URL, fee note, drawings spec (37 C.F.R. 1.84), 12-month non-provisional deadline |
+
+> *This is a drafting aid, not legal advice. Review with a registered patent attorney or agent before filing.*
+
+---
+
 ## Core principles
 
 | Principle | Why it matters |
@@ -143,13 +183,13 @@ When one element must simultaneously be X and not-X:
 
 **Contradiction (Phase 0):** high torque needs a heavy reaction base — but heavy hurts mobility. The base must be both heavy (stability) and light (portability).
 
-**Reframe (Phase 3):** react torque *internally* through a multi-spindle nutrunner ring `[P5 Merging, P13 Inversion]`; re-reference the whole machine off the **hub** rather than the floor `[P13]`; let mechanical compliance absorb alignment `[P10, P15]`. Eliminates jack instability, grounded-torque dependence, and sub-millimeter sensing — in one architectural move.
+**Reframe (Phase 3):** react torque *internally* through a multi-spindle nutrunner ring `[P5, P13]`; re-reference the whole machine off the **hub** rather than the floor `[P13]`; let mechanical compliance absorb alignment `[P10, P15]`. Eliminates jack instability, grounded-torque dependence, and sub-millimeter sensing — in one architectural move.
 
-**Re-iterate (Phase 2B):** architecture shifted → `+ multi-spindle ring · + hub-clamp reaction collar · + RCC wrist · − ground outriggers · − heavy ballast`
+**Re-iterate (Phase 2B):** `+ multi-spindle ring · + hub-clamp reaction collar · + RCC wrist · − ground outriggers · − heavy ballast`
 
-**Stress-test (Phase 4):** seized/locking nuts (mitigable) · lug-centric wheels (mitigable via chuck + tapered seats) · soft ground (fundamental, roadside) · stranding (mitigable via mechanical fail-safe lower). `P22`: tire friction while grounded reacts nut-breaking torque — use it before lifting. No structural flaw → exit loop.
+**Optimize (Phase 6):** parallel-stage the spare while lifting `[P20]`; FMEA hardens the lift lock. Python script optimizes spindle count vs. ring mass vs. motor cost via `differential_evolution` on a weighted objective (cycle time × mass × cost).
 
-**Optimize (Phase 6):** parallel-stage the spare while lifting `[P20]`; FMEA hardens the lift lock.
+**Patent (Phase 8):** independent claim on hub-clamp reaction collar as torque reaction mechanism; ASCII figures of ring assembly and hub clamp; 4 dependent claims on spindle count, chuck geometry, RCC compliance, and autonomous control mode.
 
 **Final design — PitCrew-A.** TRIZ citation log: `P2 · P5 · P10 · P13 · P15 · P20 · P22 · P25`
 
@@ -163,13 +203,13 @@ When one element must simultaneously be X and not-X:
 2. Open Claude → **Settings → Capabilities → Skills**
 3. Upload the file
 
-**From source:** copy `SKILL.md` into your Claude skill directory, or zip the folder and upload.
+**From source:** copy `SKILL.md` into your Claude skill directory.
 
 ---
 
 ## Usage
 
-Triggers automatically on any request to invent or design equipment — no syntax required:
+Triggers automatically on any request to invent or design equipment:
 
 ```
 "Invent a device to harvest ripe strawberries autonomously."
@@ -179,7 +219,7 @@ Triggers automatically on any request to invent or design equipment — no synta
 "I need a contraption that automatically loads pallets onto trucks."
 ```
 
-The skill handles the full method. You provide the goal and constraints.
+Add *"and file a patent"* to any prompt to run Phase 8 after the design converges.
 
 ---
 
@@ -189,7 +229,7 @@ The skill handles the full method. You provide the goal and constraints.
 autonomous-inventor/
 ├── LICENSE
 ├── README.md
-├── SKILL.md                   ← human-readable, full method + 3 TRIZ appendices
+├── SKILL.md                   ← full method + TRIZ appendices (human-readable)
 └── autonomous-inventor.skill  ← packaged for one-click install
 ```
 
@@ -205,7 +245,7 @@ MIT — see [LICENSE](./LICENSE).
 
 Built by **Daniel Armani**
 
-*CEO, Texas Blockchain Center · Author, Better Governance (Springer Nature, 2026)*
+*CEO, Texas Blockchain Center LLC · Author, Better Governance (Springer Nature, 2026)*
 
 [linkedin.com/in/dr-armani](https://linkedin.com/in/dr-armani) · [github.com/dr-armani](https://github.com/dr-armani)
 
