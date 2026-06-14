@@ -1,6 +1,6 @@
 ---
 name: autonomous-inventor
-description: A structured method for inventing physical equipment, devices, machines, tools, or automated systems from a stated task. Use this whenever the user wants to invent, design, conceive, or engineer a new piece of equipment, gadget, robot, machine, tool, apparatus, or hardware system to accomplish some goal — including phrasings like "invent a device that...", "design equipment to...", "come up with a machine for...", "how would you build something to...", or "I need a contraption that...". Trigger it even when the user doesn't say the word "invent," as long as they're asking for an original hardware/automation concept rather than buying advice or repair help. Drives a disciplined loop through contradiction inventory, humanoid baseline, iterative remove/add/adjust cycles, a TRIZ-grounded architectural reframe, re-iteration, brutal stress-testing that can trigger another reframe, specialization with right-sized autonomy, parameter optimization, and an honest final design.
+description: A structured method for inventing physical equipment, devices, machines, tools, or automated systems from a stated task. Use this whenever the user wants to invent, design, conceive, or engineer a new piece of equipment, gadget, robot, machine, tool, apparatus, or hardware system to accomplish some goal — including phrasings like "invent a device that...", "design equipment to...", "come up with a machine for...", or "I need a contraption that...". Trigger even when the user does not say "invent," as long as they are asking for an original hardware/automation concept rather than buying advice or repair help. Drives a disciplined loop through contradiction inventory, humanoid baseline, iterative TRIZ-grounded reframe cycles, stress-testing, specialization, parameter optimization with Python code, honest final design, and optional USPTO provisional patent application with drawings.
 ---
 
 # Autonomous Inventor
@@ -23,7 +23,7 @@ Adopt the persona of a senior engineer in the discipline that fits the task (mec
                                                       │ loop if structural │
                                                       └──── 4 Stress-test ◀┘
                                                                 │
-                                          5 Specialize ─▶ 6 Optimize ─▶ 7 Final design
+                                          5 Specialize ─▶ 6 Optimize ─▶ 7 Final design ─▶ 8 Patent
 ```
 \* 2B runs only if the reframe changed the base architecture. The 3↔4 loop is the engine — expect to traverse it more than once.
 
@@ -147,6 +147,73 @@ Optimize across:
 - **Manufacturability** — cut part count, standardize fasteners, simplify assembly
 - **Final TRIZ sweep** — run P2 (Extraction), P6 (Universality), P20 (Continuity); they reliably surface remaining redundancy
 
+
+### Python Optimization (when applicable)
+
+When the design has **numerical parameters** that trade off against each other (torque vs. weight, speed vs. accuracy, cost vs. stiffness, motor sizing, gear ratios, beam dimensions, thermal margins), write a Python optimization script.
+
+**Generate code when:**
+- There are 2+ coupled numerical parameters with a defined objective
+- A closed-form analytic solution is not obvious
+- Trade-off surfaces or Pareto fronts would clarify design decisions
+- The user asks for parameter sensitivity or sweep
+
+**Code requirements:**
+- Use `scipy.optimize` (minimize, differential_evolution) or `numpy` for sweeps; `matplotlib` for trade-off plots if useful
+- Objective function and constraints must match the physical model
+- Label every variable with units in comments
+- Print results table: parameter | optimal value | units | note
+- Include sensitivity block: perturb each parameter +/-10% and report impact on objective
+- Standard scientific Python only (numpy, scipy, matplotlib)
+
+```python
+# === [Design Name] Parameter Optimizer ===
+# Objective: [one line]
+# Key trade-off: [two parameters and what they drive]
+
+import numpy as np
+from scipy.optimize import differential_evolution
+import matplotlib.pyplot as plt  # only if trade-off plot needed
+
+# --- Physical constants & fixed inputs (all with units) ---
+
+# --- Objective function ---
+def objective(x):
+    # x[0] = param1 [units], x[1] = param2 [units], ...
+    ...
+    return value_to_minimize  # negate for maximization
+
+# --- Constraints (>= 0 form) and bounds ---
+def constraint_1(x): return ...
+constraints = [{"type": "ineq", "fun": constraint_1}]
+bounds = [(lo1, hi1), (lo2, hi2)]  # physical bounds; add units in comment
+
+# --- Solve ---
+result = differential_evolution(objective, bounds, seed=42, tol=1e-8)
+x_opt = result.x
+
+# --- Results table ---
+params = [("param1_name", x_opt[0], "unit", "note"), ...]
+print(f"{\"Parameter\":<20} {\"Value\":>12} {\"Units\":>8}  Note")
+print("-" * 60)
+for name, val, unit, note in params:
+    print(f"{name:<20} {val:>12.4f} {unit:>8}  {note}")
+
+# --- Sensitivity (+/-10% perturbation) ---
+print("\nSensitivity (% change in objective per +/-10% param change):")
+obj_base = objective(x_opt)
+for i, name in enumerate(["param1", "param2"]):
+    x_hi = x_opt.copy(); x_hi[i] *= 1.1
+    x_lo = x_opt.copy(); x_lo[i] *= 0.9
+    sens = (objective(x_hi) - objective(x_lo)) / (2 * 0.1 * abs(obj_base) + 1e-12) * 100
+    print(f"  {name}: {sens:+.1f}%")
+```
+
+If **multi-objective** (e.g., minimize cost AND maximize stiffness): use weighted sum with `differential_evolution`, note weights as assumptions, or generate a 2D Pareto sweep.
+
+If **no meaningful numerical parameters** exist, skip this block and state why in one line.
+
+
 ---
 
 ## Phase 7 — Final design
@@ -163,6 +230,172 @@ Present the converged, optimized design:
 8. **The niche** — where this is the best available option
 
 If visualization tools are available, offer a labeled cutaway or diagram. Offer, don't force.
+
+---
+
+## Phase 8 -- Provisional Patent Application (USPTO)
+
+Generate a complete **provisional utility patent application** ready to file. A provisional establishes a 12-month priority date (35 U.S.C. 111(b)). It must contain enough written description and drawings to support the non-provisional claims.
+
+**Trigger:** Offer Phase 8 after Phase 7 is complete ("Would you like a provisional patent application for this design?"), or run immediately if the user requested it upfront.
+
+---
+
+### 8.1 -- Cover Sheet Data
+
+```
+PROVISIONAL PATENT APPLICATION COVER SHEET (USPTO Form SB/16)
+
+Title of Invention: [descriptive, 500-char max]
+Inventor(s):        [Full Name | City | Country]
+Correspondence:     [to be completed by applicant]
+Filing Date:        [upon submission]
+Docket Number:      [optional applicant reference]
+```
+
+---
+
+### 8.2 -- Title
+
+One concise noun phrase. No marketing language. Mirror the broadest independent claim.
+
+---
+
+### 8.3 -- Background of the Invention
+
+1. Field: "The present invention relates to [field]."
+2. Prior art -- what exists and why it falls short
+3. The problem -- stated technically, not as a product benefit
+4. Bridge: "There is therefore a need for..."
+
+Draw directly from Phase 0 contradictions and Phase 4 stress-test findings.
+
+---
+
+### 8.4 -- Summary of the Invention
+
+Two to three paragraphs:
+- Broadest characterization of the inventive concept (maps to future independent claim)
+- Key advantages over prior art (linked to Phase 3 reframe payoffs)
+- Brief statement of preferred embodiment
+
+Language: "the invention provides...", "in one embodiment...", "the present invention comprises...". No marketing language.
+
+---
+
+### 8.5 -- Brief Description of the Drawings
+
+```
+FIG. 1 is a perspective view of [device] showing [key feature].
+FIG. 2 is a cross-sectional view along line A-A of FIG. 1.
+FIG. 3 is a schematic diagram of [subsystem].
+[continue for each figure]
+```
+
+---
+
+### 8.6 -- Drawings
+
+Generate **ASCII line drawings** for each figure. For spatially complex inventions, provide a structured description suitable for a patent draftsperson and note: *"Patent-quality drawings per 37 C.F.R. 1.84 must be prepared before non-provisional filing."*
+
+**ASCII drawing rules:**
+- Use `|`, `-`, `/`, `\`, `+`, `*`, `~` for structure
+- Label every component with a reference numeral (100, 102, 104... or 10, 12, 14...)
+- Include leader lines and a legend below each figure
+
+**Reference numeral table (define once, use consistently across all figures and description):**
+```
+Reference Numerals:
+100 -- [System / device name]
+102 -- [Major component 1]
+104 -- [Major component 2]
+106 -- [Sub-component]
+[continue as needed]
+```
+
+---
+
+### 8.7 -- Detailed Description of Preferred Embodiments
+
+Must enable a POSITA (person of ordinary skill in the art) to make and use the invention (35 U.S.C. 112).
+
+Structure:
+1. **General overview** -- describe the system referencing FIG. 1 and the numeral table
+2. **Component-by-component** -- structure, material options, dimensional ranges, function; cite figures and numerals throughout
+3. **Operation** -- step-by-step through one full operating cycle
+4. **Alternative embodiments** -- at least 2-3 variations (materials, configurations, scale, power sources, control modes) to broaden protection
+5. **Advantages** -- technical benefits tied to structural features, not marketing claims
+
+Language conventions:
+- Present tense: "the gripper 104 engages the workpiece 200..."
+- "Comprises" is broadest; prefer over "consists of"
+- Every reference numeral in the drawings must appear in the description at least once
+
+---
+
+### 8.8 -- Claims
+
+At least **one independent claim** and **3-5 dependent claims**. Claims are not examined in a provisional but define the scope and guide the non-provisional.
+
+**Independent claim -- apparatus:**
+```
+1. A [device name] comprising:
+   a [component A] configured to [function];
+   a [component B] coupled to [component A] and configured to [function]; and
+   a [component C] operatively connected to [component B], wherein [key structural relationship].
+```
+
+**Independent claim -- method:**
+```
+1. A method of [doing X], comprising:
+   [verb]-ing [element] by [means];
+   [verb]-ing [element] to [achieve result]; and
+   [verb]-ing [element] wherein [condition].
+```
+
+**Dependent claims (each adds exactly one limitation):**
+```
+2. The [device] of claim 1, wherein [component A] comprises [specific material or configuration].
+3. The [device] of claim 1, further comprising [additional element] configured to [function].
+4. The [device] of claim 1, wherein [component B] is [specific structural detail].
+5. The method of claim 1, further comprising [additional step].
+```
+
+**Drafting notes:**
+- Start with the broadest defensible independent claim -- do not over-narrow
+- Each dependent claim adds one meaningful limitation
+- Avoid means-plus-function language in independent claims unless intentional
+- Flag claim elements that may need prior art search before non-provisional filing
+
+---
+
+### 8.9 -- Abstract
+
+One paragraph, 150 words max. Cover: what the invention is, key structural features, primary advantage. Not part of the legal disclosure but the first thing examiners read.
+
+---
+
+### 8.10 -- Filing Notes
+
+```
+FILING CHECKLIST (USPTO Patent Center -- patentcenter.uspto.gov)
+[ ] Cover Sheet (SB/16) -- complete all inventor data
+[ ] Specification (Sections 8.3 - 8.7 above)
+[ ] Claims (Section 8.8) -- optional for provisional but strongly recommended
+[ ] Abstract (Section 8.9)
+[ ] Drawings -- convert to black-and-white PDF per 37 C.F.R. 1.84
+    (margins: 1" top/right, 0.625" bottom/left; no color unless prior approval)
+[ ] Filing fee -- current rates at uspto.gov/learning-and-resources/fees
+    (micro / small / large entity rates differ substantially)
+[ ] Note 12-month deadline to file non-provisional or PCT from provisional date
+    (35 U.S.C. 111(b)(5))
+
+IMPORTANT: This document is a drafting aid only.
+Review with a registered patent attorney or agent (USPTO Reg. No. required)
+before filing. Prior art search strongly recommended before non-provisional.
+This is not legal advice.
+```
+
 
 ---
 
@@ -190,8 +423,9 @@ If visualization tools are available, offer a labeled cutaway or diagram. Offer,
 - **Re-iterate (2B):** architecture shifted → restage: + multi-spindle ring, + hub-clamp reaction collar, + RCC wrist, − ground outriggers, − heavy ballast.
 - **Stress-test (4):** seized/locking nuts (mitigable), lug-centric wheels (mitigable via chuck + tapered seats), soft ground (fundamental, roadside), stranding (mitigable via mechanical fail-safe lower). P22: tire friction while grounded reacts nut-breaking torque — use it before lifting. No new *structural* flaw → exit.
 - **Specialize (5):** wins in depots / service yards / supervised vans; ~90% autonomous first-pass; safe escalation otherwise.
-- **Optimize (6):** parallel-stage the spare while lifting (P20); single cone set sized to the bore band; FMEA hardens the lift lock.
+- **Optimize (6):** parallel-stage the spare while lifting (P20); single cone set sized to the bore band; FMEA hardens the lift lock. **Python:** optimize spindle count vs. ring mass vs. motor cost via scipy.optimize.differential_evolution on weighted objective (cycle time * mass * cost).
 - **Final (7):** named design, parts, cycle, moves, TRIZ log `[P2, P5, P10, P13, P15, P20, P22, P25]`, residual limits, niche.
+- **Patent (8):** independent claim on hub-clamp reaction collar as torque reaction mechanism; ASCII figures of ring assembly and hub clamp; 4 dependent claims on spindle count, chuck geometry, RCC compliance mechanism, and autonomous control mode.
 
 Use this for rhythm and depth — not as a template to copy.
 
