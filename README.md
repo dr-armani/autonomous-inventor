@@ -11,7 +11,7 @@
 
 <br>
 
-*Anchor on a bad form. Iterate. Reframe the architecture. Loop until the hard problems are designed out — not patched.*
+*Anchor on a bad form. Iterate with TRIZ. Reframe the architecture. Loop until the hard problems are designed out — not patched.*
 
 </div>
 
@@ -29,7 +29,7 @@ This skill does something different. It **names the contradiction** generating t
 
 ## Method
 
-The skill runs 7 phases across 2 feedback loops:
+**8 phases · 2 feedback loops · TRIZ throughout**
 
 ```
 0 Contradictions → 1 Baseline → 2 Iterate → 3 Reframe (TRIZ) → 2B Re-iterate*
@@ -40,60 +40,100 @@ The skill runs 7 phases across 2 feedback loops:
                                       5 Specialize → 6 Optimize → 7 Final design
 ```
 
-> \* Phase 2B runs only when the reframe shifts the whole architecture. The **3↔4 loop** is the engine — expect to traverse it more than once.
+> \* Phase 2B runs only when the reframe shifts the whole architecture.
+> The **3↔4 loop** is the engine — expect to traverse it more than once.
 
 <br>
 
 | Phase | Name | What happens |
 |-------|------|-------------|
-| **0** | Contradiction inventory | Name technical and physical contradictions *before* designing |
-| **1** | Baseline | Start from a humanoid anchor — deliberately wrong, forces every part to earn its place |
-| **2** | Iterate | ~10 cycles of `− remove · + add · ± adjust`, each annotated with TRIZ principles |
-| **3** | Reframe | Resolve the core contradiction architecturally via TRIZ separation strategies |
-| **2B** | Re-iterate | 5–10 fresh cycles on the *new* architecture (conditional) |
-| **4** | Stress-test | Brutal failure-mode analysis; triggers another reframe if a structural flaw surfaces |
-| **5** | Specialize | Define the bounded operating domain; mechanics solves, AI decides |
-| **6** | Optimize | Tune within the fixed architecture — FMEA, efficiency, cost, manufacturability |
-| **7** | Final design | Name · components · cycle · TRIZ citation log · reframe history · residual limits · niche |
+| **0** | Contradiction inventory | Name technical and physical contradictions *before* designing. Vague contradictions produce vague reframes. |
+| **1** | Baseline | Humanoid anchor — deliberately wrong. Every later part must earn its place. Skipped with a reason when absurd. |
+| **2** | Iterate (~10 cycles) | `− remove · + add · ± adjust`, each annotated with TRIZ principles. Exposes which contradictions are actually hard. |
+| **3** | Reframe | Resolve the core contradiction architecturally: state it precisely → choose a separation strategy → apply TRIZ → name what's eliminated. |
+| **2B** | Re-iterate (conditional) | 5–10 fresh cycles on the *new* architecture if the reframe changed more than half the Phase 2 decisions. |
+| **4** | Stress-test | Brutal failure-mode analysis across 6 dimensions. **Triggers another reframe** if a structural flaw surfaces — this loop is where good designs become great. |
+| **5** | Specialize + autonomy | Define the bounded operating domain. Mechanics solves; AI decides. "Refuse safely" and "detect-and-escalate" are features. |
+| **6** | Optimize | Tune within the fixed architecture — FMEA, efficiency, cost/weight, manufacturability, final TRIZ redundancy sweep. Hard rule: structural changes route back to Phase 3, not here. |
+| **7** | Final design | Name · components · full cycle · non-obvious moves · TRIZ citation log · reframe history · residual limits · niche |
 
 ---
 
 ## TRIZ integration
 
-The skill embeds the full **TRIZ 40 Inventive Principles** and three supporting appendices:
+The skill embeds the full **TRIZ 40 Inventive Principles** woven throughout every phase — not bolted on at the end.
+
+| Where | How TRIZ is used |
+|-------|-----------------|
+| Phase 2 | Each `−/+/±` move is annotated with the principle(s) behind it, building an auditable design rationale |
+| Phase 3 | Contradiction → separation strategy → principle lookup table by goal |
+| Phase 4 | P22 (Blessing in disguise) and P11 (Cushion in advance) applied as a stress-test lens |
+| Phase 6 | Final sweep with P2, P6, P20 to surface remaining redundancy |
+| Phase 7 | TRIZ citation log in the final design output |
 
 <details>
 <summary><strong>Appendix A — 40 Inventive Principles (quick reference)</strong></summary>
 <br>
-All 40 principles grouped by cluster (Segmentation & Structure · Dynamics & Adaptability · Geometry & Dimension · Surface & Interface · Physical & Material Effects), each with a one-line core move — designed to be scanned mid-invention.
+
+All 40 principles grouped by cluster — designed to be scanned mid-invention:
+
+**Segmentation & Structure:** Segmentation · Extraction · Local quality · Asymmetry · Merging · Universality · Nesting · Anti-weight
+
+**Dynamics & Adaptability:** Preliminary anti-action · Preliminary action · Cushion in advance · Equipotentiality · Inversion · Spheroidality · Dynamics · Partial/excessive action
+
+**Geometry & Dimension:** Another dimension · Mechanical vibration · Periodic action · Continuity · Skipping · Blessing in disguise · Feedback · Intermediary
+
+**Surface & Interface:** Self-service · Copying · Cheap short-living · Mechanics substitution · Pneumatics/hydraulics · Flexible shells
+
+**Physical & Material Effects:** Porous materials · Color changes · Homogeneity · Discarding & recovering · Parameter changes · Phase transitions · Thermal expansion · Strong oxidants · Inert atmosphere · Composite materials
+
+Full table with core moves for each principle is in `SKILL.md`.
 </details>
 
 <details>
 <summary><strong>Appendix B — Separation strategies for physical contradictions</strong></summary>
 <br>
-When one element must simultaneously be X and not-X, separate the requirements:
 
-- **In space** — X in one zone, not-X in another
-- **In time** — X at one moment, not-X at another
-- **By condition** — X in one state, not-X in another
-- **By system level** — X at the part level, not-X at the system level
+When one element must simultaneously be X and not-X:
+
+| Strategy | How | Example |
+|----------|-----|---------|
+| **In space** | X in one zone, not-X in another | Hard at the contact face, soft behind it |
+| **In time** | X at one moment, not-X at another | Rigid during torque, compliant during alignment |
+| **By condition** | X in one state, not-X in another | Stiff under load, flexible under none |
+| **By system level** | X at part level, not-X at system level | Each spindle floats; the ring is rigid |
 </details>
 
 <details>
-<summary><strong>Appendix C — Contradiction-to-principle lookup</strong></summary>
+<summary><strong>Appendix C — Contradiction-to-principle lookup (mechanical / automation)</strong></summary>
 <br>
-10 common mechanical/automation tensions (strength vs. weight, torque vs. reaction force, autonomy vs. safety, etc.) each mapped to the TRIZ principles most likely to resolve them.
+
+| Tension | Try first |
+|---------|-----------|
+| Strength vs. weight | P1, P7, P8, P40 |
+| Precision vs. speed | P10, P15, P21, P28 |
+| Stability vs. mobility | P5, P8, P12, P13 |
+| Torque vs. reaction force | P5, P13, P14, P25 |
+| Sensing reliability vs. environment | P3, P10, P15, P23 |
+| Grip force vs. surface damage | P3, P9, P16, P24 |
+| Complexity vs. reliability | P2, P6, P25, P27 |
+| Range vs. accuracy | P15, P16, P17, P23 |
+| Cost vs. performance | P6, P26, P27, P35 |
+| Autonomy vs. safety | P11, P23, P24, P25 |
 </details>
 
 ---
 
 ## Core principles
 
-- **Contradictions are the signal.** Where something is hard to design, a contradiction hides. Name it; don't just add parts.
-- **The 3↔4 loop is where good designs become great.** One reframe is rarely enough.
-- **Mechanics before AI.** Compliance, self-location, and passive alignment beat precision perception.
-- **Quantify what matters** — loads, torques, tolerances, masses, cycle time, cost.
-- **Honesty over salesmanship.** A design with stated limits beats one that claims everything.
+| Principle | Why it matters |
+|-----------|---------------|
+| **Contradictions are the signal** | Where something is hard to design, a contradiction hides. Name it; don't just add parts. |
+| **Loop on the reframe** | The 3↔4 cycle is where good designs become great. One reframe is rarely enough. |
+| **Mechanics before AI** | Compliance, self-location, and passive alignment beat precision perception. |
+| **Quantify what matters** | Loads, torques, tolerances, masses, cycle time, cost. Estimates beat hand-waving; flag them. |
+| **Honesty over salesmanship** | A design with stated limits beats one that claims everything. |
+| **Function dictates form** | Reject anthropomorphism unless a humanoid feature genuinely earns its place. |
 
 ---
 
@@ -101,38 +141,45 @@ When one element must simultaneously be X and not-X, separate the requirements:
 
 **Task:** change a flat tire autonomously.
 
-The skill identified the core contradiction: *high torque needs a heavy reaction base, but a heavy base hurts mobility.* The reframe resolved it by reacting torque **internally** through a multi-spindle nutrunner ring (TRIZ P5, P13) and re-referencing the machine off the **hub** rather than the floor — eliminating jack instability, grounded-torque dependence, and sub-millimeter sensing requirements in one move.
+**Contradiction (Phase 0):** high torque needs a heavy reaction base — but heavy hurts mobility. The base must be both heavy (stability) and light (portability).
 
-The result — **PitCrew-A** — uses a self-leveling LiftPod that mechanically locks before any work begins, a multi-spindle servo ring that engages all lug nuts simultaneously, and a compliance-first wrist that absorbs misalignment without precise sensing. TRIZ citation log: `P2 · P5 · P10 · P13 · P15 · P20 · P22 · P25`.
+**Reframe (Phase 3):** react torque *internally* through a multi-spindle nutrunner ring `[P5 Merging, P13 Inversion]`; re-reference the whole machine off the **hub** rather than the floor `[P13]`; let mechanical compliance absorb alignment `[P10, P15]`. Eliminates jack instability, grounded-torque dependence, and sub-millimeter sensing — in one architectural move.
+
+**Re-iterate (Phase 2B):** architecture shifted → `+ multi-spindle ring · + hub-clamp reaction collar · + RCC wrist · − ground outriggers · − heavy ballast`
+
+**Stress-test (Phase 4):** seized/locking nuts (mitigable) · lug-centric wheels (mitigable via chuck + tapered seats) · soft ground (fundamental, roadside) · stranding (mitigable via mechanical fail-safe lower). `P22`: tire friction while grounded reacts nut-breaking torque — use it before lifting. No structural flaw → exit loop.
+
+**Optimize (Phase 6):** parallel-stage the spare while lifting `[P20]`; FMEA hardens the lift lock.
+
+**Final design — PitCrew-A.** TRIZ citation log: `P2 · P5 · P10 · P13 · P15 · P20 · P22 · P25`
 
 ---
 
 ## Installation
 
-**One-click install:**
+**One-click:**
 
 1. Download [`autonomous-inventor.skill`](./autonomous-inventor.skill)
 2. Open Claude → **Settings → Capabilities → Skills**
-3. Upload the `.skill` file
+3. Upload the file
 
-**From source:**
-
-Copy `SKILL.md` into your own Claude skill directory, or zip the folder and upload.
+**From source:** copy `SKILL.md` into your Claude skill directory, or zip the folder and upload.
 
 ---
 
 ## Usage
 
-Once installed, the skill triggers automatically on any request to invent or design equipment — no special syntax required.
+Triggers automatically on any request to invent or design equipment — no syntax required:
 
 ```
 "Invent a device to harvest ripe strawberries autonomously."
 "Design equipment to clear snow from residential sidewalks."
 "Come up with a machine that sorts recycling at the curb."
 "How would you build something to inspect underwater pipelines?"
+"I need a contraption that automatically loads pallets onto trucks."
 ```
 
-The skill handles the full method. You guide the domain and constraints.
+The skill handles the full method. You provide the goal and constraints.
 
 ---
 
@@ -142,8 +189,8 @@ The skill handles the full method. You guide the domain and constraints.
 autonomous-inventor/
 ├── LICENSE
 ├── README.md
-├── SKILL.md                   ← human-readable, browsable
-└── autonomous-inventor.skill  ← one-click install
+├── SKILL.md                   ← human-readable, full method + 3 TRIZ appendices
+└── autonomous-inventor.skill  ← packaged for one-click install
 ```
 
 ---
@@ -156,8 +203,10 @@ MIT — see [LICENSE](./LICENSE).
 
 <div align="center">
 
-Built by **Daniel Armani Ph.D.**
+Built by **Daniel Armani**
 
-*CEO, Texas Blockchain Center LLC*
+*CEO, Texas Blockchain Center · Author, Better Governance (Springer Nature, 2026)*
+
+[linkedin.com/in/dr-armani](https://linkedin.com/in/dr-armani) · [github.com/dr-armani](https://github.com/dr-armani)
 
 </div>
